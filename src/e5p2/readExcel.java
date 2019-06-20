@@ -29,6 +29,7 @@ public class readExcel {
      } else {
       //data[i - 1][j] = String.valueOf(c.getNumericCellValue());
     	 /*this is a test 2019-06-20 11:55*/
+    	 /*this is a test 2019-06-20 11:56*/
     	 data[i - 1][j] = String.format ("%.0f", c.getNumericCellValue());
      }
     } catch (Exception e) {
