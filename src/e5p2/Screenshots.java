@@ -13,6 +13,7 @@ public class Screenshots {
 	    	File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
 	        File DestFile=new File(fileWithPath);
 	        FileUtils.copyFile(SrcFile, DestFile);
+	        /*this is a test 2019-06-20 11:21"*/
 	  }
 
 
