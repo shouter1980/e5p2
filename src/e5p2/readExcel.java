@@ -29,6 +29,7 @@ public class readExcel {
      } else {
       //data[i - 1][j] = String.valueOf(c.getNumericCellValue());
     	 /*this is the master branch 2019-06-20 12:14*/
+    	 /*this is branch 1 2019-06-20 12:15*/
     	 data[i - 1][j] = String.format ("%.0f", c.getNumericCellValue());
      }
     } catch (Exception e) {
