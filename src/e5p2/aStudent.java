@@ -64,8 +64,6 @@ public class aStudent {
 			Thread.sleep(900);
 			driver.findElement(By.xpath("//*[@id=\"dropdown-basic\"]/li[3]/a")).click();
 		} else {
-			/*this is a test*/
-			/*this is another test comments*/
 			System.out.println(" Login failed");
 		}
 		driver.close();
