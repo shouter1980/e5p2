@@ -54,19 +54,21 @@ public class aStudent {
 		Thread.sleep(30000);
 		
 		String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
-		String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");
-		Screenshots.takeSnapShot(driver, fileNameWithPath);
-
-		System.out.print("studentID = " + studentID);			
+		String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");		
+		
 		if (!driver.findElements(By.xpath("//*[@id=\"svg5112\"]")).isEmpty()) {
-			System.out.println(" Login successful");
+			//Screenshots.takeSnapShot(driver, fileNameWithPath);
+			System.out.println(studentID + " Login successful");
 			driver.findElement(By.xpath("//*[@id=\"svg5112\"]")).click();
 			Thread.sleep(900);
 			driver.findElement(By.xpath("//*[@id=\"dropdown-basic\"]/li[3]/a")).click();
+			driver.close();
 		} else {
-			System.out.println(" Login failed");
-		}
-		driver.close();
+			Screenshots.takeSnapShot(driver, fileNameWithPath);			
+			System.out.println(studentID + " Login failed. No Logout button found.");
+			driver.close();
+			Assert.assertFalse(true);
+		}		
 	}
 
 	@AfterSuite
