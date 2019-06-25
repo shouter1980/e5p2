@@ -55,6 +55,7 @@ public class aStudent {
 		
 		String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
 		String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");		
+		//Screenshots.takeSnapShot(driver, fileNameWithPath);
 		
 		if (!driver.findElements(By.xpath("//*[@id=\"svg5112\"]")).isEmpty()) {
 			//Screenshots.takeSnapShot(driver, fileNameWithPath);
