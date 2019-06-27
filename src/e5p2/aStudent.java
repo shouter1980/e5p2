@@ -1,5 +1,7 @@
 package e5p2;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,7 +22,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class aStudent {
-	public WebDriver driver;
+	//public WebDriver driver;
+	int test1 =0; 
+	int test2 =0;
+	int test3 =0;
+	int test4 =0;
 
 	@DataProvider
 	public String[][] getExcelData() throws InvalidFormatException, IOException {
@@ -30,7 +36,7 @@ public class aStudent {
 
 	@BeforeSuite
 	public void launchFirefox() {
-		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		//System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
 	}
 
 	/*@Test(testName = "portalLogin", dataProvider = "getExcelData")
@@ -72,9 +78,14 @@ public class aStudent {
 		}		
 	}*/
 	
-	@Test(testName = "studentUpdateProfiles", dataProvider = "getExcelData")
+	
+	
+	@Test(dataProvider = "getExcelData")
 	public void studentUpdateProfiles(String studentID, String studentPsw) throws InterruptedException, Exception {
 
+		WebDriver driver;
+		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("https://swin-tst.connexus.online/login");
@@ -90,40 +101,35 @@ public class aStudent {
 		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(Keys.ENTER);
 		Thread.sleep(900);
 		driver.findElement(By.xpath("//*[@id='idBtn_Back']")).click();
-		Thread.sleep(15000);
+		Thread.sleep(45000);
 		
-		//String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
-		//String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");		
-		//Screenshots.takeSnapShot(driver, fileNameWithPath);
 
 		try 
 		{
 			driver.findElement(By.xpath("//*[@id=\"svg5112\"]")).click();
 			Thread.sleep(900);
 			driver.findElement(By.xpath("//*[@id=\"dropdown-basic\"]/li[1]/a")).click();
-			Thread.sleep(1500);
+			Thread.sleep(3000);
+			
 			driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[1]/div/div/button")).click();
 			Thread.sleep(1500);
 			
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 9; i++) {
 				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).clear();
 				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).sendKeys(String.valueOf(i) + " Test Contact Ave");
-				Thread.sleep(500);
+				Thread.sleep(1000);
 				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).clear();
 				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).sendKeys(String.valueOf(i) +" Test Residential Ave");
-				Thread.sleep(500);
+				Thread.sleep(1000);
 				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).clear();
 				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).sendKeys("TestPersonalEmail" + String.valueOf(i) + "@Swin.edu.au");
-				Thread.sleep(500);
+				Thread.sleep(1000);
 				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).clear();
 				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).sendKeys("TestStudentEmail" + String.valueOf(i) + "@Swin.edu.au");
-				Thread.sleep(500);
+				Thread.sleep(1000);
 				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/button")).click();
-				Thread.sleep(9000);		
-				
-				String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
-				String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");		
-				Screenshots.takeSnapShot(driver, fileNameWithPath);
+				Thread.sleep(6000);		
+				System.out.println("Updated record " + String.valueOf(i) + " for student " + studentID);
 			}
 			
 			driver.close();
@@ -134,14 +140,344 @@ public class aStudent {
 			String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
 			String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");	
 			Screenshots.takeSnapShot(driver, fileNameWithPath);			
-			System.out.println(studentID + " Login failed. No Logout button found.");
+			System.out.println("Web element is not found for student " + studentID);
 			driver.close();
-			Assert.assertFalse(true);	
+			AssertJUnit.assertFalse(true);	
 		}		
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	@Test(dataProvider = "getExcelData")
+	public void studentUpdateProfiles1(String studentID, String studentPsw) throws InterruptedException, Exception {
+
+		if(test1 == 0) {
+			Thread.sleep(25000);
+			test1 = 1;
+		}
+		WebDriver driver;
+		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		driver.get("https://swin-tst.connexus.online/login");
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//button[@class='btn btn-primary btn-lg btn-block']")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//input[@id='i0116']")).sendKeys(studentID, "@student.test.swin.edu.au");
+		driver.findElement(By.xpath("//*[@id='idSIButton9']")).click();
+		Thread.sleep(1500);
+		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(studentPsw);
+		Thread.sleep(500);
+		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(Keys.ENTER);
+		Thread.sleep(900);
+		driver.findElement(By.xpath("//*[@id='idBtn_Back']")).click();
+		Thread.sleep(45000);
+		
+
+		try 
+		{
+			driver.findElement(By.xpath("//*[@id=\"svg5112\"]")).click();
+			Thread.sleep(900);
+			driver.findElement(By.xpath("//*[@id=\"dropdown-basic\"]/li[1]/a")).click();
+			Thread.sleep(3000);
+			
+			driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[1]/div/div/button")).click();
+			Thread.sleep(1500);
+			
+			for (int i = 0; i < 9; i++) {
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).sendKeys(String.valueOf(i) + " Test Contact Ave");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).sendKeys(String.valueOf(i) +" Test Residential Ave");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).sendKeys("TestPersonalEmail" + String.valueOf(i) + "@Swin.edu.au");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).sendKeys("TestStudentEmail" + String.valueOf(i) + "@Swin.edu.au");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/button")).click();
+				Thread.sleep(6000);		
+				System.out.println("Updated record " + String.valueOf(i) + " for student " + studentID);
+			}
+			
+			driver.close();
+		} 
+		
+		catch(Exception e) 
+		{
+			String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
+			String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");	
+			Screenshots.takeSnapShot(driver, fileNameWithPath);			
+			System.out.println("Web element is not found for student " + studentID);
+			driver.close();
+			AssertJUnit.assertFalse(true);	
+		}		
+	}
+	
+	@Test(dataProvider = "getExcelData")
+	public void studentUpdateProfiles2(String studentID, String studentPsw) throws InterruptedException, Exception {
+
+		if(test2 == 0) {
+			Thread.sleep(50000);
+			test2 = 1;
+		}
+		WebDriver driver;
+		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		driver.get("https://swin-tst.connexus.online/login");
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//button[@class='btn btn-primary btn-lg btn-block']")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//input[@id='i0116']")).sendKeys(studentID, "@student.test.swin.edu.au");
+		driver.findElement(By.xpath("//*[@id='idSIButton9']")).click();
+		Thread.sleep(1500);
+		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(studentPsw);
+		Thread.sleep(500);
+		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(Keys.ENTER);
+		Thread.sleep(900);
+		driver.findElement(By.xpath("//*[@id='idBtn_Back']")).click();
+		Thread.sleep(45000);
+		
+
+		try 
+		{
+			driver.findElement(By.xpath("//*[@id=\"svg5112\"]")).click();
+			Thread.sleep(900);
+			driver.findElement(By.xpath("//*[@id=\"dropdown-basic\"]/li[1]/a")).click();
+			Thread.sleep(3000);
+			
+			driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[1]/div/div/button")).click();
+			Thread.sleep(1500);
+			
+			for (int i = 0; i < 9; i++) {
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).sendKeys(String.valueOf(i) + " Test Contact Ave");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).sendKeys(String.valueOf(i) +" Test Residential Ave");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).sendKeys("TestPersonalEmail" + String.valueOf(i) + "@Swin.edu.au");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).sendKeys("TestStudentEmail" + String.valueOf(i) + "@Swin.edu.au");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/button")).click();
+				Thread.sleep(6000);		
+				System.out.println("Updated record " + String.valueOf(i) + " for student " + studentID);
+			}
+			
+			driver.close();
+		} 
+		
+		catch(Exception e) 
+		{
+			String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
+			String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");	
+			Screenshots.takeSnapShot(driver, fileNameWithPath);			
+			System.out.println("Web element is not found for student " + studentID);
+			driver.close();
+			AssertJUnit.assertFalse(true);	
+		}		
+	}
+	
+	@Test(dataProvider = "getExcelData")
+	public void studentUpdateProfiles3(String studentID, String studentPsw) throws InterruptedException, Exception {
+
+		if(test3 == 0) {
+			Thread.sleep(75000);
+			test3 = 1;
+		}
+		WebDriver driver;
+		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		driver.get("https://swin-tst.connexus.online/login");
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//button[@class='btn btn-primary btn-lg btn-block']")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//input[@id='i0116']")).sendKeys(studentID, "@student.test.swin.edu.au");
+		driver.findElement(By.xpath("//*[@id='idSIButton9']")).click();
+		Thread.sleep(1500);
+		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(studentPsw);
+		Thread.sleep(500);
+		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(Keys.ENTER);
+		Thread.sleep(900);
+		driver.findElement(By.xpath("//*[@id='idBtn_Back']")).click();
+		Thread.sleep(45000);
+		
+
+		try 
+		{
+			driver.findElement(By.xpath("//*[@id=\"svg5112\"]")).click();
+			Thread.sleep(900);
+			driver.findElement(By.xpath("//*[@id=\"dropdown-basic\"]/li[1]/a")).click();
+			Thread.sleep(3000);
+			
+			driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[1]/div/div/button")).click();
+			Thread.sleep(1500);
+			
+			for (int i = 0; i < 9; i++) {
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).sendKeys(String.valueOf(i) + " Test Contact Ave");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).sendKeys(String.valueOf(i) +" Test Residential Ave");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).sendKeys("TestPersonalEmail" + String.valueOf(i) + "@Swin.edu.au");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).sendKeys("TestStudentEmail" + String.valueOf(i) + "@Swin.edu.au");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/button")).click();
+				Thread.sleep(6000);		
+				System.out.println("Updated record " + String.valueOf(i) + " for student " + studentID);
+			}
+			
+			driver.close();
+		} 
+		
+		catch(Exception e) 
+		{
+			String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
+			String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");	
+			Screenshots.takeSnapShot(driver, fileNameWithPath);			
+			System.out.println("Web element is not found for student " + studentID);
+			driver.close();
+			AssertJUnit.assertFalse(true);	
+		}		
+	}
+	
+	@Test(dataProvider = "getExcelData")
+	public void studentUpdateProfiles4(String studentID, String studentPsw) throws InterruptedException, Exception {
+
+		if(test4 == 0) {
+			Thread.sleep(100000);
+			test4 = 1;
+		}
+		WebDriver driver;
+		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		driver.get("https://swin-tst.connexus.online/login");
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//button[@class='btn btn-primary btn-lg btn-block']")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//input[@id='i0116']")).sendKeys(studentID, "@student.test.swin.edu.au");
+		driver.findElement(By.xpath("//*[@id='idSIButton9']")).click();
+		Thread.sleep(1500);
+		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(studentPsw);
+		Thread.sleep(500);
+		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(Keys.ENTER);
+		Thread.sleep(900);
+		driver.findElement(By.xpath("//*[@id='idBtn_Back']")).click();
+		Thread.sleep(45000);
+		
+
+		try 
+		{
+			driver.findElement(By.xpath("//*[@id=\"svg5112\"]")).click();
+			Thread.sleep(900);
+			driver.findElement(By.xpath("//*[@id=\"dropdown-basic\"]/li[1]/a")).click();
+			Thread.sleep(3000);
+			
+			driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[1]/div/div/button")).click();
+			Thread.sleep(1500);
+			
+			for (int i = 0; i < 9; i++) {
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[1]/div/div/div[2]/input")).sendKeys(String.valueOf(i) + " Test Contact Ave");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[2]/div/div/div[2]/input")).sendKeys(String.valueOf(i) +" Test Residential Ave");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[8]/div/div/div[2]/input")).sendKeys("TestPersonalEmail" + String.valueOf(i) + "@Swin.edu.au");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).clear();
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/form/div[9]/div/div/div[2]/input")).sendKeys("TestStudentEmail" + String.valueOf(i) + "@Swin.edu.au");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("/html/body/app-root/app-connexus-app/app-user-page/app-layout/div[2]/div/app-profile-page/div/accordion/app-contact-details-form/accordion-group/div/div[2]/div/button")).click();
+				Thread.sleep(6000);		
+				System.out.println("Updated record " + String.valueOf(i) + " for student " + studentID);
+			}
+			
+			driver.close();
+		} 
+		
+		catch(Exception e) 
+		{
+			String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
+			String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");	
+			Screenshots.takeSnapShot(driver, fileNameWithPath);			
+			System.out.println("Web element is not found for student " + studentID);
+			driver.close();
+			AssertJUnit.assertFalse(true);	
+		}		
+	}	
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@AfterSuite
 	public void closeBrowser() {
-		driver.quit();
+		//driver.quit();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
