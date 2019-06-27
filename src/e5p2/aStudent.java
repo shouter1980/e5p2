@@ -78,7 +78,6 @@ public class aStudent {
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("https://swin-tst.connexus.online/login");
-		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Thread.sleep(3000);
 		driver.findElement(By.xpath("//button[@class='btn btn-primary btn-lg btn-block']")).click();
 		Thread.sleep(3000);
@@ -91,10 +90,6 @@ public class aStudent {
 		Thread.sleep(900);
 		driver.findElement(By.xpath("//*[@id='idBtn_Back']")).click();
 		Thread.sleep(15000);
-		
-		//String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
-		//String fileNameWithPath = new String("C:\\screenshots\\" + studentID + "@" + formattedDate + ".png");		
-		//Screenshots.takeSnapShot(driver, fileNameWithPath);
 
 		try 
 		{
