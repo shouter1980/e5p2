@@ -30,7 +30,8 @@ public class aStudent {
 
 	@BeforeSuite
 	public void launchFirefox() {
-		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		//System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:\\Java-selenium\\chromedriver_win32\\chromedriver.exe");
 	}
 
 	/*@Test(testName = "portalLogin", dataProvider = "getExcelData")
@@ -75,7 +76,8 @@ public class aStudent {
 	@Test(testName = "studentUpdateProfiles", dataProvider = "getExcelData")
 	public void studentUpdateProfiles(String studentID, String studentPsw) throws InterruptedException, Exception {
 
-		driver = new FirefoxDriver();
+		//driver = new FirefoxDriver();
+		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("https://swin-tst.connexus.online/login");
 		Thread.sleep(3000);
