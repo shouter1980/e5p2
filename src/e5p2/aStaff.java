@@ -147,7 +147,7 @@ public class aStaff {
 	@Test(testName = "createNewStudent")
 	public void createNewStudent() throws InterruptedException, Exception {
 
-		for (int i = 0; i < 50; i++) {
+		for (int i = 66; i < 69; i++) {
 			driver = new FirefoxDriver();
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 			driver.manage().window().maximize();
@@ -238,6 +238,12 @@ public class aStaff {
 				Thread.sleep(1000);
 				driver.findElement(By.xpath("//*[@id=\"HomeLanguage\"]")).sendKeys(Keys.ENTER);
 				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"CitizenshipCountry\"]")).sendKeys("Australia");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id=\"CitizenshipCountry\"]")).sendKeys(Keys.ENTER);
+				Thread.sleep(1000);
+								
 				driver.findElement(By.xpath("//*[@id=\"StudentDetailSection_TopSaveButton\"]/span")).click();
 				Thread.sleep(4000);
 
