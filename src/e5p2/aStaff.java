@@ -82,7 +82,7 @@ public class aStaff {
 		driver.findElement(By.xpath("//a[@id='GoToWorkplace']")).click();
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//div[@id='Role3']")).click();
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		driver.findElement(By.xpath("//div[@id='Ci2Function3']")).click();
 
 		Thread.sleep(2000);
