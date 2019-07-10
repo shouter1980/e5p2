@@ -22,7 +22,8 @@ import org.testng.annotations.Test;
 
 public class aStaff {
 	public WebDriver driver;
-
+	int numberOfNewStudent = 35;	
+	
 	@BeforeSuite
 	public void launchFirefox() {
 		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
@@ -34,7 +35,7 @@ public class aStaff {
 		return read.getCellData("C:\\Data\\newStudent.xlsx", "staff");
 	}
 	
-	@Test(testName = "aStaff", dataProvider = "getExcelData", priority = 1)
+	@Test(testName = "addCourse&ReleaseOffer", dataProvider = "getExcelData", priority = 2)
 	public void aStaff(String studentID, String courseName) throws InterruptedException, Exception {
 
 		driver = new FirefoxDriver();
@@ -146,8 +147,7 @@ public class aStaff {
 
 	@Test(testName = "createNewStudent", priority = 1)
 	public void createNewStudent() throws InterruptedException, Exception {
-
-		int numberOfNewStudent = 7;		
+	
 		
 		String newStudentslist[][] = new String[numberOfNewStudent+1][2];
 		newStudentslist[0][0]= "Student";

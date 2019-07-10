@@ -45,15 +45,17 @@ public class readExcel {
 		return data;
 	}
 
-	public static void excelWriter(String excelPath, String newStudentsList[][]) throws InvalidFormatException, IOException {
+	public static void excelWriter(String excelPath, String newStudentsList[][])
+			throws InvalidFormatException, IOException {
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream(new File(excelPath));
 			// Create Workbook instance holding .xlsx file
 			XSSFWorkbook workbook = new XSSFWorkbook();
 
 			// Create a new Worksheet
-			//String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
-			//XSSFSheet sheet = workbook.createSheet("newStudentList"+formattedDate);
+			// String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new
+			// Date());
+			// XSSFSheet sheet = workbook.createSheet("newStudentList"+formattedDate);
 			XSSFSheet sheet = workbook.createSheet("staff");
 
 			int rownum = 0;
@@ -66,13 +68,12 @@ public class readExcel {
 					cell.setCellValue(value);
 				}
 			}
-				
-				// Write workbook into the excel
-				workbook.write(fileOutputStream);
-				// Close the workbook
-				workbook.close();
 
-			
+			// Write workbook into the excel
+			workbook.write(fileOutputStream);
+			// Close the workbook
+			workbook.close();
+
 		} catch (Exception ie) {
 			ie.printStackTrace();
 		}
