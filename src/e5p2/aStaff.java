@@ -2,6 +2,7 @@ package e5p2;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
@@ -144,10 +145,16 @@ public class aStaff {
 	 * driver.close(); }
 	 */
 
-	@Test(testName = "createNewStudent")
+	@Test(testName = "createNewStudent", priority = 1)
 	public void createNewStudent() throws InterruptedException, Exception {
 
-		for (int i = 66; i < 69; i++) {
+		int numberOfNewStudent = 7;		
+		
+		String newStudentslist[][] = new String[numberOfNewStudent+1][2];
+		newStudentslist[0][0]= "Student";
+		newStudentslist[0][1]= "Course";
+		String[] coursesList = {"GC-CMGT","GD-FBS","MA-CIMGT","MM-BAEXEI","MA-IT1","BA-BUS10","BA-CS","BA-ICT","BA-MCMN","BB-HSCBUS","AB-AV","XP-CISPG","XU-BUS","BH-ENG","BA-HSC1"};
+		for (int i = 0; i < numberOfNewStudent; i++) {
 			driver = new FirefoxDriver();
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 			driver.manage().window().maximize();
@@ -187,17 +194,17 @@ public class aStaff {
 				driver.findElement(By.xpath("//*[@id=\"Title\"]")).sendKeys(Keys.ENTER);
 				Thread.sleep(1000);
 
-				driver.findElement(By.xpath("//*[@id=\"FamilyName\"]")).sendKeys("TestStudent" + String.valueOf(i));
+				driver.findElement(By.xpath("//*[@id=\"FamilyName\"]")).sendKeys("E5Project");
 				Thread.sleep(1000);
-				driver.findElement(By.xpath("//*[@id=\"GivenName\"]")).sendKeys("E5Project");
+				driver.findElement(By.xpath("//*[@id=\"GivenName\"]")).sendKeys("TestStudent-A" + String.valueOf(i));
 				Thread.sleep(1000);
 
 				driver.findElement(By.xpath("//*[@id=\"Gender\"]")).sendKeys("Male");
 				Thread.sleep(1000);
 				driver.findElement(By.xpath("//*[@id=\"Gender\"]")).sendKeys(Keys.ENTER);
 				Thread.sleep(1000);
-				driver.findElement(By.xpath("//*[@id=\"PreferredEmail\"]"))
-						.sendKeys("TestStudent" + String.valueOf(i) + "@E5Project.com");
+				driver.findElement(By.xpath("//*[@id=\"PreferredEmail\"]")).sendKeys("TestStudent" + String.valueOf(i) + "@E5Project.com");
+						
 				Thread.sleep(1000);
 				driver.findElement(By.xpath("//*[@id=\"Nationality\"]")).sendKeys("Australian");
 				Thread.sleep(1000);
@@ -247,10 +254,26 @@ public class aStaff {
 				driver.findElement(By.xpath("//*[@id=\"StudentDetailSection_TopSaveButton\"]/span")).click();
 				Thread.sleep(4000);
 
+				String newStudent = driver.findElement(By.xpath("//*[@id=\"FormTitleControl\"]/div[2]/div[2]/span[1]")).getText();
+				String newStudentID = newStudent.substring(0, 9);
+				
 				String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
-				String fileNameWithPath = new String("C:\\screenshots\\" + "@" + formattedDate + ".png");
+				String fileNameWithPath = new String("C:\\screenshots\\" + newStudentID + "@" + formattedDate + ".png");
 				Screenshots.takeSnapShot(driver, fileNameWithPath);
-				System.out.println(String.valueOf(i) + " students created successfully.");
+				
+				System.out.println(newStudentID + " - the No." + String.valueOf(i) + " new student was created successfully.");
+				
+				
+				
+				int j = coursesList.length;
+				int tmpi = i;
+				while (tmpi + 1 > j) {
+					tmpi -= j;
+				}
+				newStudentslist[i+1][0] = newStudentID;
+				newStudentslist[i+1][1] = coursesList[tmpi];
+				
+				System.out.println(Arrays.deepToString(newStudentslist));
 
 				driver.close();
 
@@ -263,6 +286,7 @@ public class aStaff {
 				//Assert.assertFalse(true);
 			}
 		}
+		readExcel.excelWriter("C:\\Data\\newStudent.xlsx", newStudentslist);
 
 	}
 
