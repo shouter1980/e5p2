@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 
 public class aStaff {
 	public WebDriver driver;
-	int numberOfNewStudent = 2;	
+	int numberOfNewStudent = 180;	
 	
 	@BeforeSuite
 	public void launchFirefox() {
@@ -87,14 +87,14 @@ public class aStaff {
 
 				driver.findElement(By.xpath("//*[@id=\"FamilyName\"]")).sendKeys("E5Project");
 				Thread.sleep(1000);
-				driver.findElement(By.xpath("//*[@id=\"GivenName\"]")).sendKeys("TestStudent-A" + String.valueOf(i));
+				driver.findElement(By.xpath("//*[@id=\"GivenName\"]")).sendKeys("TestStudent-I" + String.valueOf(i));
 				Thread.sleep(1000);
 
 				driver.findElement(By.xpath("//*[@id=\"Gender\"]")).sendKeys("Male");
 				Thread.sleep(1000);
 				driver.findElement(By.xpath("//*[@id=\"Gender\"]")).sendKeys(Keys.ENTER);
 				Thread.sleep(1000);
-				driver.findElement(By.xpath("//*[@id=\"PreferredEmail\"]")).sendKeys("TestStudentA" + String.valueOf(i) + "@E5Project.com");
+				driver.findElement(By.xpath("//*[@id=\"PreferredEmail\"]")).sendKeys("TestStudent-I" + String.valueOf(i) + "@E5Project.com");
 						
 				Thread.sleep(1000);
 				driver.findElement(By.xpath("//*[@id=\"Nationality\"]")).sendKeys("Australian");

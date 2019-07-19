@@ -2,6 +2,7 @@ package e5p2;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
@@ -21,21 +22,22 @@ import org.testng.annotations.Test;
 
 public class aStudent {
 	public WebDriver driver;
+	int numberOfNewStudent = 5;	
 
 	@DataProvider
 	public String[][] getExcelData() throws InvalidFormatException, IOException {
 		readExcel read = new readExcel();
-		return read.getCellData("C:\\Data\\student.xlsx", "student");
+		return read.getCellData("C:\\Data\\newStudent.xlsx", "staff");
 	}
 
 	@BeforeSuite
 	public void launchFirefox() {
-		//System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
 		//System.setProperty("webdriver.chrome.driver", "C:\\Java-selenium\\chromedriver_win32\\chromedriver.exe");
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\ljiang\\Downloads\\chromedriver.exe");
+		//System.setProperty("webdriver.chrome.driver", "C:\\Users\\ljiang\\Downloads\\chromedriver.exe");
 	}
 
-	/*@Test(testName = "portalLogin", dataProvider = "getExcelData")
+	@Test(testName = "portalLogin", dataProvider = "getExcelData", enabled = false)
 	public void studentLogin(String studentID, String studentPsw) throws InterruptedException, Exception {
 
 		driver = new FirefoxDriver();
@@ -48,8 +50,10 @@ public class aStudent {
 		driver.findElement(By.xpath("//input[@id='i0116']")).sendKeys(studentID, "@student.test.swin.edu.au");
 		driver.findElement(By.xpath("//*[@id='idSIButton9']")).click();
 		Thread.sleep(1500);
-		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(studentPsw);
+		//driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(studentPsw);
+		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys("Welcome12345!");
 		Thread.sleep(500);
+		
 		driver.findElement(By.xpath("//*[@id='i0118']")).sendKeys(Keys.ENTER);
 		Thread.sleep(900);
 		driver.findElement(By.xpath("//*[@id='idBtn_Back']")).click();
@@ -72,9 +76,9 @@ public class aStudent {
 			driver.close();
 			Assert.assertFalse(true);
 		}		
-	}*/
+	}
 	
-	@Test(testName = "studentUpdateProfiles", dataProvider = "getExcelData")
+	@Test(testName = "studentUpdateProfiles", dataProvider = "getExcelData", enabled = false)
 	public void studentUpdateProfiles(String studentID, String studentPsw) throws InterruptedException, Exception {
 
 		//driver = new FirefoxDriver();
@@ -137,6 +141,208 @@ public class aStudent {
 			Assert.assertFalse(true);	
 		}		
 	}
+	
+	
+	
+	@Test(testName = "eAppCreateNewStudent", priority = 1)
+	public void eAppCreateNewStudent() throws InterruptedException, Exception {
+	
+		
+		String newStudentslist[][] = new String[numberOfNewStudent+1][2];
+		newStudentslist[0][0]= "Student";
+		newStudentslist[0][1]= "Course";
+		String[] coursesList = {"GC-CMGT","GD-FBS","MA-CIMGT","MM-BAEXEI","MA-IT1","BA-BUS10","BA-CS","BA-ICT","BA-MCMN","BB-HSCBUS","AB-AV","XP-CISPG","XU-BUS","BH-ENG","BA-HSC1"};
+		for (int i = 0; i < numberOfNewStudent; i++) {
+			driver = new FirefoxDriver();
+			//driver = new ChromeDriver();
+			
+			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+			driver.manage().window().maximize();
+
+			String baseUrl = "http://s1-tst-web01.ds.swin.edu.au/eStudent/SM/eApplications/eAppLogin.aspx?f=%24S1.EAP.CI2LOGIN.WEB";
+			
+		
+			try {
+				//eApp portal login page
+				driver.get(baseUrl);
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_cmdRegister\"]")).click();
+				Thread.sleep(2000);
+				
+				//Register page
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Personal_drpTitle_InputControl\"]")).sendKeys("Mr");
+				Thread.sleep(1000);
+				//driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Personal_drpTitle_InputControl\"]")).sendKeys(Keys.ENTER);				
+				//Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Personal_txtGvnName_InputControl\"]")).sendKeys("TestStudent-A" + String.valueOf(i));
+
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Personal_txtFamName_InputControl\"]")).sendKeys("ProjectSTU");
+				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Personal_txtBirthDate_drpDobDay\"]")).sendKeys("11");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Personal_txtBirthDate_drpDobMonth\"]")).sendKeys("November");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Personal_txtBirthDate_drpDobYear\"]")).sendKeys("1981");
+				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Personal_drpGender_InputControl\"]")).sendKeys("Male");
+				Thread.sleep(1000);
+								
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Contact_txtEmail_InputControl\"]")).sendKeys("TestStudent-A" + String.valueOf(i) + "@ProjectSTU.com");
+				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Contact_txtEmailConfirm_InputControl\"]")).sendKeys("TestStudent-A" + String.valueOf(i) + "@ProjectSTU.com");
+				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Contact_repPhone_ctl00_txtPhone_InputControl\"]")).sendKeys("0" + String.valueOf(400000000+i));
+				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Address_drpCountry_InputControl\"]")).sendKeys("Australia");
+				Thread.sleep(2000);
+				//driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Address_drpCountry_InputControl\"]")).sendKeys(Keys.ENTER);
+				//Thread.sleep(2000);
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Address_txtAddrLine1_InputControl\"]")).sendKeys(String.valueOf(i) + " STUTest Street");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Address_txtAddrSuburb_InputControl\"]")).sendKeys("Box Hill");
+				Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Address_drpState_InputControl\"]")).sendKeys("VIC");
+				Thread.sleep(1000);
+				//driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Address_drpState_InputControl\"]")).sendKeys(Keys.ENTER);
+				//Thread.sleep(1000);
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Address_txtAddrPostCode_InputControl\"]")).sendKeys("3124");
+				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_CitiResi_radCiti_OSRES\"]")).click();
+				Thread.sleep(2000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_CitiResi_drpCountryOfCiti_InputControl\"]")).sendKeys("Singapore");
+				Thread.sleep(1000);
+				//driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_CitiResi_drpCountryOfCiti_InputControl\"]")).sendKeys(Keys.ENTER);
+				//Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_SubmissionCountry_drpCountry_InputControl\"]")).sendKeys("Australia");
+				Thread.sleep(1000);
+				//driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_SubmissionCountry_drpCountry_InputControl\"]")).sendKeys(Keys.ENTER);
+				//Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Cultural_drpCountryOfBirth_InputControl\"]")).sendKeys("Singapore");
+				Thread.sleep(3000);
+				//driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Cultural_drpCountryOfBirth_InputControl\"]")).sendKeys(Keys.ENTER);
+				//Thread.sleep(2000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Cultural_drpMainLangAtHome_InputControl\"]")).sendKeys("English Only");
+				Thread.sleep(1000);
+				//driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_Cultural_drpMainLangAtHome_InputControl\"]")).sendKeys(Keys.ENTER);
+				//Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_ctlProgAction_NextButton\"]")).click();
+				Thread.sleep(8000);
+				
+				//Register page Confirmation
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_ctlProgAction_NextButton\"]")).click();
+				Thread.sleep(8000);				
+				//???verify "You have been successfully registered as a user in our system"
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_ctlProgAction_NextButton\"]")).click();
+				Thread.sleep(7000);
+				
+				//Select page
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_CourseSrch_txtFreeTextSrch_InputControl\"]")).sendKeys("DP-ICT1");
+				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_CourseSrch_btnSearch\"]")).click();
+				Thread.sleep(7000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_grdRslt_ctl03_btnApply\"]")).click();
+				Thread.sleep(7000);
+				//???verify "Course DP-ICT1 - Diploma of Information Technology (UniLink) has been added to your application."
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_CourseSrch_txtFreeTextSrch_InputControl\"]")).clear();
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_CourseSrch_txtFreeTextSrch_InputControl\"]")).sendKeys("BA-ICT");
+				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_CourseSrch_btnSearch\"]")).click();
+				Thread.sleep(7000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_grdRslt_ctl02_btnApply\"]")).click();
+				Thread.sleep(7000);
+				//???verify "Course BA-ICT - Bachelor of Information and Communication Technology has been added to your application."
+
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_CourseSrch_lnkSelectedCourses\"]")).click();
+				Thread.sleep(5000);
+				//???verify "BA-ICT" "DP-ICT1"
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_ctlProgAction_NextButton\"]")).click();
+				Thread.sleep(5000);
+				
+				String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
+				String fileNameWithPath = new String("C:\\screenshots\\the" + String.valueOf(i) + "newStudent@" + formattedDate + ".png");	
+				
+				if (driver.findElements(By.xpath("//*[@id=\"ctl00_Content_EapPart_ScholarshipSrch_txtFreeTextSrch_InputControl\"]")).isEmpty()) {
+					Screenshots.takeSnapShot(driver, fileNameWithPath);			
+					System.out.println("The " + String.valueOf(i) + " new student failed. Scholarship page is not displayed.");
+					//driver.close();
+					Assert.assertFalse(true);
+				}		
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_ctlProgAction_NextButton\"]")).click();
+				Thread.sleep(3000);
+				
+				//???verify "Advanced Standing Application"
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_ctlProgAction_NextButton\"]")).click();
+				Thread.sleep(3000);
+				
+				//???verify "Application Selection Summary"
+				//???verify "BA-ICT" "DP-ICT1"
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_ctlProgAction_NextButton\"]")).click();
+				Thread.sleep(3000);
+				
+				//Apply page
+				if (driver.findElements(By.xpath("//*[@id=\"ctl00_Content_EapPart_ApplnRqmt_ctlListerApplnRqmts_repResponseFields_0_2453102_repResponses_ctl00_repResponseFields_ctl00_drpResponseFld_2453102_1_InputControl\"]")).isEmpty()) {
+					//Screenshots.takeSnapShot(driver, fileNameWithPath);			
+					System.out.println("could not found the exclusion requirement");
+					//driver.close();
+					Assert.assertFalse(true);
+				}		
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_ApplnRqmt_ctlListerApplnRqmts_repResponseFields_0_2453082_repResponses_ctl00_repResponseFields_ctl00_drpResponseFld_2453082_1_InputControl\"]")).sendKeys("No");
+				Thread.sleep(5000);
+				
+				
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_ctlProgAction_NextButton\"]")).click();
+				Thread.sleep(4000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_EapPart_TermsAppln_chkAgreeTc\"]")).click();
+				Thread.sleep(1000);
+				
+				driver.findElement(By.xpath("//*[@id=\"ctl00_Content_ctlProgAction_NextButton\"]")).click();
+				Thread.sleep(7000);
+				//???verify "Thank you, your application has been submitted!"
+				
+				Screenshots.takeSnapShot(driver, fileNameWithPath);			
+				System.out.println("The " + String.valueOf(i) + " new student and application created.");
+				driver.close();
+
+			} catch (Exception e) {
+				String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new Date());
+				String fileNameWithPath = new String("C:\\screenshots\\" + "@" + formattedDate + ".png");
+				Screenshots.takeSnapShot(driver, fileNameWithPath);
+				System.out.println("Create New failed. No Logout button found.");
+				//driver.close();
+				Assert.assertFalse(true);
+			}
+		}
+		readExcel.excelWriter("C:\\Data\\newStudent.xlsx", newStudentslist);
+
+	}
+	
+	
+	
+	
+	
 
 	@AfterSuite
 	public void closeBrowser() {
