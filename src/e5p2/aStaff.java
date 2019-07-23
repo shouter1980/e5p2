@@ -26,7 +26,8 @@ public class aStaff {
 	
 	@BeforeSuite
 	public void launchFirefox() {
-		System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		//System.setProperty("webdriver.firefox.marionette", "C:\\Users\\ljiang\\Downloads\\geckodriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\ljiang\\Downloads\\chromedriver.exe");
 	}
 	
 	@DataProvider
@@ -37,7 +38,7 @@ public class aStaff {
 	
 	
 
-	@Test(testName = "createNewStudent", priority = 1)
+	@Test(testName = "createNewStudent", priority = 1, enabled = false)
 	public void createNewStudent() throws InterruptedException, Exception {
 	
 		
@@ -184,7 +185,7 @@ public class aStaff {
 	
 	
 	
-	@Test(testName = "addCourse&ReleaseOffer", dataProvider = "getExcelData", priority = 2)
+	@Test(testName = "addCourse&ReleaseOffer", dataProvider = "getExcelData", priority = 2, enabled = false)
 	public void aStaff(String studentID, String courseName) throws InterruptedException, Exception {
 
 		driver = new FirefoxDriver();
@@ -297,7 +298,7 @@ public class aStaff {
 	
 	
 	
-	@Test(testName = "changeNewStudentsPSW", dataProvider = "getExcelData", priority = 3)
+	@Test(testName = "changeNewStudentsPSW", dataProvider = "getExcelData", priority = 3, enabled = false)
 	public void changeNewStudentPSW(String studentID, String courseName) throws InterruptedException, Exception {
 
 		driver = new FirefoxDriver();
@@ -334,10 +335,145 @@ public class aStaff {
 	}
 	
 	
+	@Test(testName = "SIT-CIA-login", priority = 1)
+	public void SITciaStaff() throws InterruptedException, Exception {
+
+		//driver = new FirefoxDriver();
+		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+
+		String baseUrl = "https://s1-tst-cia.ds.swin.edu.au/T1TST/CiAnywhere/Web/TST/Workplace/Account/LogOn";
+		driver.get(baseUrl);
+
+
+		driver.findElement(By.xpath("//*[@id=\"LogonName\"]")).sendKeys("LJIANG");
+		driver.findElement(By.xpath("//*[@id=\"Password\"]")).sendKeys("welcome123");
+		driver.findElement(By.xpath("//*[@id=\"BtnLogOn\"]")).click();
+		Thread.sleep(7000);		
+		driver.findElement(By.xpath("//*[@id=\"LnkToWorkplace\"]/span[1]")).click();
+		Thread.sleep(5000);
+			
+		driver.findElement(By.xpath("//*[@id=\"Role3\"]/span[3]")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"Ci2Function3\"]/a")).click();
+		Thread.sleep(5000);
+		
+		driver.findElement(By.xpath("//*[@id=\"EnquiryRelatedDataPortlet_ActionsMenu_menuItem0_DDC_DefaultButton\"]/span")).click();
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//*[@id=\"EnquiryRelatedDataPortlet_ActionsExMenu_menuItem0_DDC_DefaultButton\"]/span[2]")).click();
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//*[@id=\"GivenName\"]")).sendKeys("S20190722115203");
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"OtherName\"]")).click();
+		Thread.sleep(9000);
+		
+		String newStudentIDwithName = driver.findElement(By.xpath("//*[@id=\"QuickEnquiryPopup\"]/div[1]/div[4]/div[2]/div[3]/div[3]/div/div/div/div[3]/div[1]/div/div/span")).getText();
+		String newStudentID = newStudentIDwithName.substring(0, 9);
+		
+		System.out.println(newStudentID + " is found:)");
+		
+		
+		
+		
+		
+		
+		
+		
+/*
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//li[@class='dropdownControl chooser']")).click();
+		Thread.sleep(1000);
+		driver.findElement(
+				By.xpath("//button[@id='EnquiryRelatedDataPortlet_ActionsExMenu_menuItem0_DDC_DefaultButton']"))
+				.click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//input[@id='StudentId']")).sendKeys(studentID);
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//input[@id='StudentId']")).sendKeys(Keys.ENTER);
+		Thread.sleep(1000);
+
+		driver.findElement(By.xpath("//button[@class='defaultAction primary']")).click();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//div[@id='Tab_SelectCourseListSection_Handle']")).click();
+		Thread.sleep(1500);
+		driver.findElement(By.xpath("//textarea[@id = 'SearchValue']")).sendKeys(courseName, Keys.ENTER);
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//button[@class = 'defaultAction primary']")).click();
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//input[@id='LogonName']")).sendKeys("LeoJ");
+		driver.findElement(By.xpath("//input[@id='Password']")).sendKeys("Welcome123!");
+		driver.findElement(By.xpath("//button[@id='BtnLogOn']")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//button[@id='ContextualKeysCancelButton']")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//a[@id='GoToWorkplace']")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//div[@id='Role3']")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//div[@id='Ci2Function3']")).click();
+
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//textarea[@id='SearchValue']")).sendKeys(studentID);
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//textarea[@id='SearchValue']")).sendKeys(Keys.ENTER);
+		Thread.sleep(11000);
+		driver.findElement(By.xpath("//button[@class='defaultAction primary']")).click();
+
+		// assessment start
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//button[@id='MoreActions_DropDownButton']")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//button[@id='MoreActions_DropDownButton']")).sendKeys(Keys.TAB, Keys.ENTER);
+
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//div[@id = 'Tab_RequirementListSection_Handle']")).click();
+		Thread.sleep(3000);
+		
+		//call verifyCourse function
+		staffAssessment.verifyCourse(driver, courseName);
+		
+		driver.findElement(By.xpath("//div[@id='RequirementSection_TopActionPanel']")).click();
+
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"Tab_AssessmentAndOutcomesRdpSection_Handle\"]")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath(
+				"//*[@id=\"AssessmentAndOutcomesRdpSection_RDP_ThumbnailViewer_CARD\"]/div[4]/div/div/div/div[4]/div[1]/div/ul/li/button[1]/span"))
+				.click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"AssessmentAndOutcomesSection_StudyLineItem_BasisOfAdmission\"]"))
+				.sendKeys("Higher Education course", Keys.ENTER, Keys.ENTER, Keys.TAB, Keys.TAB);
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"AssessmentAndOutcomesSection_NewAssessmentOutcome_Outcome\"]"))
+				.sendKeys("Successful", Keys.ENTER, Keys.ENTER, Keys.TAB, Keys.TAB);
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"AssessmentAndOutcomesSection_TopSaveButton\"]/span")).click();
+
+		Thread.sleep(15000);
+		driver.findElement(By.xpath("//*[@id=\"MoreActions_DropDownButton\"]")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"MoreActions_DropDownButton\"]")).sendKeys(Keys.TAB, Keys.TAB, Keys.TAB,
+				Keys.TAB, Keys.TAB, Keys.TAB, Keys.TAB, Keys.TAB, Keys.TAB, Keys.ENTER);
+
+		Thread.sleep(6000);
+		driver.findElement(By.xpath(
+				"//*[@id=\"AssessmentAndOutcomesRdpSection_RDP_ThumbnailViewer_CARD\"]/div[4]/div/div/div/div[4]/div[1]/div/ul/li/button[1]/span"))
+				.click();
+
+		Thread.sleep(6000);
+		driver.findElement(By.xpath("//*[@id=\"PrimaryAction_DefaultButton\"]/span")).click();
+		Thread.sleep(3000);
+		System.out.println(courseName + " added to student " + studentID);
+
+		driver.close();*/
+	}
 	
 
 	@AfterSuite
 	public void closeBrowser() {
-		driver.quit();
+		//driver.quit();
 	}
 }
