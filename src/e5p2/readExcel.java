@@ -51,11 +51,6 @@ public class readExcel {
 			FileOutputStream fileOutputStream = new FileOutputStream(new File(excelPath));
 			// Create Workbook instance holding .xlsx file
 			XSSFWorkbook workbook = new XSSFWorkbook();
-
-			// Create a new Worksheet
-			// String formattedDate = new SimpleDateFormat("dd.MM.yyyy_HH;mm;ss").format(new
-			// Date());
-			// XSSFSheet sheet = workbook.createSheet("newStudentList"+formattedDate);
 			XSSFSheet sheet = workbook.createSheet("staff");
 
 			int rownum = 0;

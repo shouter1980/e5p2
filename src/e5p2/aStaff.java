@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 
 public class aStaff {
 	public WebDriver driver;
-	int numberOfNewStudent = 180;	
+	int numberOfNewStudent = 2;	
 	
 	@BeforeSuite
 	public void launchFirefox() {
@@ -38,7 +38,7 @@ public class aStaff {
 	
 	
 
-	@Test(testName = "createNewStudent", priority = 1, enabled = false)
+	@Test(testName = "createNewStudent", priority = 1)
 	public void createNewStudent() throws InterruptedException, Exception {
 	
 		
@@ -47,7 +47,8 @@ public class aStaff {
 		newStudentslist[0][1]= "Course";
 		String[] coursesList = {"GC-CMGT","GD-FBS","MA-CIMGT","MM-BAEXEI","MA-IT1","BA-BUS10","BA-CS","BA-ICT","BA-MCMN","BB-HSCBUS","AB-AV","XP-CISPG","XU-BUS","BH-ENG","BA-HSC1"};
 		for (int i = 0; i < numberOfNewStudent; i++) {
-			driver = new FirefoxDriver();
+			//driver = new FirefoxDriver();
+			driver = new ChromeDriver();
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 			driver.manage().window().maximize();
 
@@ -185,10 +186,11 @@ public class aStaff {
 	
 	
 	
-	@Test(testName = "addCourse&ReleaseOffer", dataProvider = "getExcelData", priority = 2, enabled = false)
+	@Test(testName = "addCourse&ReleaseOffer", dataProvider = "getExcelData", priority = 2)
 	public void aStaff(String studentID, String courseName) throws InterruptedException, Exception {
 
-		driver = new FirefoxDriver();
+		//driver = new FirefoxDriver();
+		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 
@@ -298,10 +300,11 @@ public class aStaff {
 	
 	
 	
-	@Test(testName = "changeNewStudentsPSW", dataProvider = "getExcelData", priority = 3, enabled = false)
+	@Test(testName = "changeNewStudentsPSW", dataProvider = "getExcelData", priority = 3)
 	public void changeNewStudentPSW(String studentID, String courseName) throws InterruptedException, Exception {
 
-		driver = new FirefoxDriver();
+		//driver = new FirefoxDriver();
+		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 
@@ -335,7 +338,7 @@ public class aStaff {
 	}
 	
 	
-	@Test(testName = "SIT-CIA-login", priority = 1)
+	@Test(testName = "SIT-CIA-login", priority = 1, enabled = false)
 	public void SITciaStaff() throws InterruptedException, Exception {
 
 		//driver = new FirefoxDriver();
